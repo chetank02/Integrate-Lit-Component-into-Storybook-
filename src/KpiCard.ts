@@ -29,13 +29,31 @@ export class KpiCard extends LitElement {
       flex-direction: column;
       justify-content: space-between;
       gap: 8px;
-      transition: box-shadow 0.2s ease;
+      transition: box-shadow 0.3s ease;
+      position: relative;
     }
  
     .card:hover {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
  
+   
+    /*  Green tint for positive delta */
+    .kpi-card.positive {
+      background-color: #f0fbf6;
+    }
+    /*  Red tint for negative delta */
+    .kpi-card.negative {
+      background-color: #fff5f5;
+    }
+ 
+   
+  /*  Neutral background for flat delta */
+    .kpi-card.flat {
+      background-color: #ffffff;
+    }
+ 
+   
     .label {
       font-size: 12px;
       font-weight: 600;
@@ -53,6 +71,9 @@ export class KpiCard extends LitElement {
       font-size: 28px;
       font-weight: 600;
       color: #202b33;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
  
     .delta {
@@ -81,9 +102,54 @@ export class KpiCard extends LitElement {
     }
  
     .subtext {
+      display: flex;
+      justify-content: space-between; /* Ensures the label and value are spaced apart */
+      align-items: center; /* Vertically aligns the content */
       font-size: 12px;
       color: #5c6470;
     }
+   
+    .subtext .label {
+      font-size: 12px;
+      color: #5c6470;
+      text-transform: none;
+    }
+    .subtext .value {
+      font-size: 12px;
+      color: #5c6470;
+    }
+   
+   
+  .gradient-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 12px;
+  }
+ 
+ 
+  .gradient-overlay.positive {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.07), transparent 70%);
+  }
+ 
+  .gradient-overlay.negative {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), transparent 70%);
+  }
+ 
+  .gradient-overlay.flat {
+    display: none;
+  }
+ 
+ 
+  .card-content {
+    position: relative;
+    z-index: 1;
+  }
+ 
+ 
+ 
+   
   `;
  
   private get deltaValue(): number {
@@ -124,21 +190,26 @@ export class KpiCard extends LitElement {
         style="height: ${this.height}; width: ${this.width};"
         aria-live="polite"
       >
+        <div class="gradient-overlay ${this.deltaClass}"></div>
+        <div class="card-content">
         <div class="label" aria-label="KPI label">${this.label}</div>
  
-        <div class="value-row">
-          <div class="value" aria-label="${this.label} current value">
-            ${this.formatNumber(this.current)}
-          </div>
+      <div class="value-row">
+        <div class="value" aria-label="${this.label} current value">
+          ${this.formatNumber(this.current)}
           <div class="delta ${this.deltaClass}" aria-label="${this.label} ${this.mode} change">
             <span>${this.deltaIcon}</span>
             <span>${this.formatDelta()}</span>
           </div>
         </div>
+      </div>
  
-        <div class="subtext" aria-label="${this.label} last year value">
-          last Year ${this.formatNumber(this.lastYear)}
-        </div>
+      <div class="subtext" aria-label="${this.label} last year value">
+        <span class="label"> Last Year</span>
+        <span class="value">${this.formatNumber(this.lastYear)}</span>
+      </div>
+ 
+       
       </div>
     `;
   }
