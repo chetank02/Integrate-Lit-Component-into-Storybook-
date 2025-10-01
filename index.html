@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KPI Card</title>
+  <script type="module" src="./dist/KpiCard.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <kpi-card
+    label="Revenue"
+    current="5000"
+    previous="4500"
+    delta="11.1"
+    lastYear="4000"
+    mode="percent"
+  ></kpi-card>
+</body>
+</html>
