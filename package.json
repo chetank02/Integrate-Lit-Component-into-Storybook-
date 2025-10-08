@@ -18,7 +18,7 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^4.1.1",
+     "@chromatic-com/storybook": "^4.1.1",
     "@storybook/addon-a11y": "^9.1.8",
     "@storybook/addon-docs": "^9.1.8",
     "@storybook/addon-vitest": "^9.1.8",
